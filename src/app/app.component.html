@@ -1,25 +1,53 @@
-<button class="btn btn-primary"  id="start"> click on quadrant II to start</button>
-<div class="container" >
-   <div class="row">
-       <div class="col-lg-4">
-         <button  class="button btn btn-default" (click)="BoxClick(1,'but1')"  id ="box1"></button>
-       </div>
-       <div class="col-lg-4">
-           <button  class="button btn btn-default" (click)="BoxClick(2,'but2')"  id="box2"></button>
-       </div>
-   </div>
-  <div class="row">
-       <div class="col-lg-4">
-           <button  class="button btn btn-default" (click)="BoxClick(3,'but3')"  id="box3"></button>
-       </div>
-       <div class="col-lg-4">
-           <button  class="button btn btn-default" (click)="BoxClick(4,'but4')"  id="box4"></button>
-       </div>
+<button class="btn btn-primary"  id="start"> Start</button>
+<div class="container" > <!--logic for Box UI using divs-->
+ 
+      <!--<div class="col-lg-3"></div>
+
+          <div class="col-lg-3">
+            <div class="RightCol1" (click)="BoxClick(1,'box1')"  id ="box1"></div>
+            <div class="RightCol1" (click)="BoxClick(2,'box2')"  id ="box2"></div>
+          </div>
+
+          <div class="col-lg-3">
+             <div class="RightCol1" (click)="BoxClick(1,'box1')"  id ="box1"></div>
+             <div class="RightCol1" (click)="BoxClick(2,'box2')"  id ="box2"></div>
+          </div>
+
+      <div class="col-lg-3"></div>
+  </div>
+</div>-->
+      <div class="row">
+          <div class="col-lg-4">
+              <button  class="button btn btn-default" (click)="BoxClick(1,'box1')"  id ="box1"></button>
+          </div>
+          <div class="col-lg-4">
+              <button  class="button btn btn-default" (click)="BoxClick(2,'box2')"  id="box2"></button>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-4">
+              <button  class="button btn btn-default" (click)="BoxClick(3,'box3')"  id="box3"></button>
+          </div>
+          <div class="col-lg-4">
+              <button  class="button btn btn-default" (click)="BoxClick(4,'box4')"  id="box4"></button>
+          </div>
+      </div>
  </div>
- </div>
-  <h2 id="score">Score: {{score}}</h2>
-  <div> <button type="button" id="submit" class="btn btn-primary" 
-    (click)="modal.show()">Save</button>
+
+ <br> <!--logic for display of timer-->
+
+ <!--<h3 class="text-center">Timer:
+     {{this.hackathon.hoursDisplay ? this.hackathon.hoursDisplay : '00'}} :
+     {{(this.hackathon.minutesDisplay) && (this.hackathon.minutesDisplay <= 59) ? this.hackathon.minutesDisplay : '00'}} :
+     {{(this.hackathon.secondsDisplay) && (this.hackathon.secondsDisplay <= 59) ? this.hackathon.secondsDisplay : '00'}} <br/>-->
+ <br>
+
+ <h3 class="text-center"  *ngIf="!this.finish">Player Score:{{score}}</h3>
+ <h2 class="text-center" *ngIf="this.finish">Game Over. Your score is {{score}}.</h2><br><br><br>
+
+  <!--<h2 id="score">Score: {{score}}</h2>-->
+  <div> 
+    <button type="button" id="submit" class="btn btn-primary" (click)="modal.show()">Save</button>
   </div>
   <app-modal #modal>
         <div class="app-modal-header">
@@ -96,8 +124,6 @@
         <div class="app-modal-footer">
           <button type="button" class="btn btn-default" 
           (click)="modal.hide()">Close</button>
-          
-          
         </div>
       </app-modal>       
 

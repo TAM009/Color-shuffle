@@ -1,14 +1,26 @@
+#start{
+    position: relative;
+    left:550px;
+    top:20px;
+}
+
+
 .button{
     margin-bottom: 0px;
     padding-top:50px;
     padding-bottom: 50px;
-    width:100px;
+    width:200px;
+    height:200px;
     background-color: black;
 }
 .col-lg-4 {
-width: 10px;
+width: 200px;
 padding-right:85px;
 
+}
+.container{
+    margin-top:40px;
+    margin-left:450px;
 }
 span{
     color:black;

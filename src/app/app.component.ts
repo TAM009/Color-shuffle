@@ -1,6 +1,6 @@
 import { Submit } from './submit';
 import { HackathonService } from './hackathon.service';
-import { Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { FormsModule } from '@angular/forms';
 
@@ -9,8 +9,13 @@ import { FormsModule } from '@angular/forms';
  templateUrl: './app.component.html',
  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent{
   
+   public ticks=0;//Variable for activating timer
+
+   public finish: Boolean = false;
+   public continue: Boolean = true;
+
    timeOutFlag:boolean=false; // if true than game timeout else game running;
    timeOutStarted:boolean=false; //if false than game timer not yet started
    rand:number =1;// random function variable initialised.
@@ -44,38 +49,49 @@ export class AppComponent {
 
    // color change function
    changeColour(boxValue:number,id:string){
-     document.getElementById(id).style.background="#000";
-     this.GenerateRandomBox();
-     let boxId = this.rand.toString();
-    //  console.log("elementId"+elementId);
-     boxId = "box" +boxId;
-     document.getElementById(boxId).style.background="#fff";
-     this.val=this.rand;
-     this.idbox=boxId;  
+     if(this.continue)
+      {
+          document.getElementById(id).style.background="#000";
+          this.GenerateRandomBox();
+          let boxId = this.rand.toString();
+          //  console.log("elementId"+elementId);
+          boxId = "box" +boxId;
+          document.getElementById(boxId).style.background="#fff";
+          this.val=this.rand;
+          this.idbox=boxId; 
+      } 
    }
    
    //function handling click event
    //for first iteration checks if the time out has started or not.
    BoxClick(boxValue:number,id:string){
-     if(this.timeOutStarted===false){
+     if(this.timeOutStarted===false)
+     {
        this.StartTimeout(); //starts game timer on first function invocation;
        this.timeOutStarted=true;
       // console.log("timeoutStarted");
      }
-     if(this.timeOutFlag===false){
+     if(this.timeOutFlag===false)
+     {
        if(boxValue==this.rand){
          this.score++;
          console.log("score"+this.score);
          this.changeColour(boxValue,id);
        }
-       else{
+       else
+       {
          console.log("Oops!! Keep trying...")
        }
      }
-     else{
-         console.log("finalscore"+this.score);
-         console.log('your 90 secs are over');
-         alert('90 seconds over! Press save to submit');
+     
+     else
+     {   
+          this.continue = false;
+          console.log(this.finish);
+          this.finish = true;
+         //console.log("finalscore"+this.score);
+         //console.log('your 90 secs are over');
+         //alert('90 seconds over! Press save to submit');
      }
 
    }

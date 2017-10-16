@@ -15,10 +15,61 @@ export class HackathonService {
  public minutesDisplay = 0;
  public hoursDisplay = 0;
  public secondsDisplay = 0;
- colors;
- Url = 'http://172.23.238.209:8080/hackathon';
- private headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json',
- 'Access-Control-Allow-Origin' : 'http://localhost:4200', 'Access-Control-Allow-Credentials': 'true'});
+ //colors;
+ 
+//Logic for the service required to display timer while the game is running
+onClickTimer() 
+{
+  if ((this.count) ===  0) { this.startTimer(); }
+
+ (this.count)  = (this.count) + 1;
+  console.log(this.count);
+}
+
+startTimer() {
+  const timer = Observable.timer(1, 500);
+  this.sub = timer.subscribe(
+      t => {
+          this.ticks = t;
+          console.log(this.ticks);
+          //this.colors = this.shuffle(['white', 'red', 'green', 'blue']);
+          if ((this.ticks) <= 90) {
+            this.secondsDisplay = Math.round(this.getSeconds(this.ticks) / 2);
+            console.log(this.secondsDisplay);
+            this.minutesDisplay = this.getMinutes(this.ticks);
+            this.hoursDisplay = this.getHours(this.ticks);
+          // tslint:disable-next-line:one-line
+          } else{
+            this.finish = false;
+            console.log(this.finish);
+            this.change = true;
+          }
+      }
+  );
+}
+
+private getSeconds(ticks: number) {
+  return this.pad(ticks % 60);
+}
+
+private getMinutes(ticks: number) {
+   return this.pad((Math.floor(ticks / 60)) % 60);
+}
+
+private getHours(ticks: number) {
+  return this.pad(Math.floor((ticks / 60) / 60));
+}
+
+private pad(digit: any) {
+  return digit <= 9 ? '0' + digit : digit;
+}
+//Logic for timer service ends!! 
+
+//Logic for Post service begins.
+Url = 'http://172.23.238.209:8080/hackathon';
+private headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json',
+'Access-Control-Allow-Origin' : 'http://localhost:4200', 'Access-Control-Allow-Credentials': 'true'});
+
 
  // tslint:disable-next-line:one-line
  create(name, emailId, projectId, location, gitURL, score){
@@ -33,14 +84,16 @@ export class HackathonService {
 
  }
 
- createModel(model) {
+ createModel(model) 
+ {
    console.log('Submitting model', JSON.stringify(model));
    return this.http
    .post(this.Url, JSON.stringify(model), { headers: this.headers }).toPromise().catch(this.handleError);
  }
 
- private handleError(error: any) {
+ private handleError(error: any) 
+ {
     console.error('An error occurred', error); // for demo purposes only
-  }
+ }
 
 }
